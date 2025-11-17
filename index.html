@@ -24,7 +24,6 @@
         /* --- 메인 배너 --- */
         .hero { 
             height: 600px; 
-            /* [확인] 여기 .jpg 인지 꼭 확인! */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/main-banner.jpg') no-repeat center/cover;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;
         }
@@ -58,19 +57,60 @@
         .faculty-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
         .faculty-role { font-size: 14px; color: #007bff; font-weight: 600; }
 
-        /* --- 모달 --- */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .modal-content {
-            background-color: #fff; margin: 50px auto; padding: 0;
-            border-radius: 15px; width: 90%; max-width: 800px; position: relative;
-            animation: slideIn 0.3s forwards; overflow: hidden;
-        }
-        .close-button {
-            color: #333; position: absolute; right: 20px; top: 15px; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 10;
-        }
+        /* --- 모달 (슬라이드 기능 추가됨) --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
         
-        .modal-body-images { width: 100%; display: flex; flex-direction: column; }
-        .modal-body-images img { width: 100%; height: auto; display: block; border-bottom: 1px solid #eee; }
+        .modal-content {
+            position: relative;
+            background-color: transparent; /* 배경 투명 */
+            margin: 0 auto; padding: 0;
+            width: 90%; max-width: 800px;
+            animation: slideIn 0.3s forwards;
+        }
+
+        .close-button {
+            color: white; position: absolute; right: 0; top: -40px; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 100;
+        }
+
+        /* 슬라이더 컨테이너 */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden; /* 넘치는 이미지 숨김 */
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* 슬라이더 트랙 (이미지들이 가로로 놓임) */
+        .slider-track {
+            display: flex;
+            transition: transform 0.4s ease-in-out; /* 부드럽게 넘어가는 효과 */
+        }
+
+        .slider-track img {
+            width: 100%;
+            flex-shrink: 0; /* 이미지 크기 줄어들지 않게 고정 */
+            display: block;
+        }
+
+        /* 좌우 화살표 버튼 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 50%;
+            z-index: 10;
+            transition: 0.3s;
+        }
+        .nav-btn:hover { background-color: rgba(0,0,0,0.8); }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
 
         .footer-map { height: 400px; background: #ddd; }
         footer { background: #111; color: white; padding: 50px 0; text-align: center; }
@@ -175,8 +215,13 @@
     <div id="imageModal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="closeModal()">&times;</span>
-            <div class="modal-body-images" id="modalImages">
-                </div>
+            
+            <div class="slider-container">
+                <div class="slider-track" id="sliderTrack">
+                    </div>
+                <button class="nav-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="nav-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
+            </div>
         </div>
     </div>
 
@@ -201,28 +246,54 @@
         // 강사 상세 이미지 데이터
         const teacherDetails = {
             'leedaeyoung': [
-                // [확인] 여기 .jpg 인지 꼭 확인!
                 'images/teacher-leedaeyoung-detail1.jpg', 
                 'images/teacher-leedaeyoung-detail2.jpg'
             ]
         };
+
+        // 슬라이드 관련 변수
+        let currentSlideIndex = 0;
+        let totalSlides = 0;
 
         // 모달 열기
         function showTeacherImages(teacherId) {
             const images = teacherDetails[teacherId];
             if (!images) return;
 
-            const container = document.getElementById('modalImages');
-            container.innerHTML = ''; 
+            const track = document.getElementById('sliderTrack');
+            track.innerHTML = ''; // 초기화
+            currentSlideIndex = 0; // 0번부터 시작
+            totalSlides = images.length;
 
             images.forEach(imgSrc => {
                 const img = document.createElement('img');
                 img.src = imgSrc;
-                container.appendChild(img);
+                track.appendChild(img);
             });
 
+            updateSliderPosition(); // 위치 잡기
             document.getElementById('imageModal').style.display = 'flex';
             document.body.style.overflow = 'hidden'; 
+        }
+
+        // 슬라이드 이동 함수
+        function moveSlide(step) {
+            currentSlideIndex += step;
+
+            // 처음이나 끝에 도달했을 때 처리 (순환)
+            if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1; // 맨 뒤로
+            } else if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0; // 맨 앞으로
+            }
+            
+            updateSliderPosition();
+        }
+
+        // 슬라이더 위치 업데이트 (핵심)
+        function updateSliderPosition() {
+            const track = document.getElementById('sliderTrack');
+            track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
         }
 
         // 모달 닫기
