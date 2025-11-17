@@ -21,10 +21,10 @@
         nav a { font-weight: 600; font-size: 16px; transition: color 0.3s; }
         nav a:hover { color: #007bff; }
 
-        /* --- 메인 배너 (aca_main 적용) --- */
+        /* --- 메인 배너 --- */
         .hero { 
             height: 600px; 
-            /* 배경 이미지 경로 수정됨 */
+            /* [확인] 여기 .jpg 인지 꼭 확인! */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/main-banner.jpg') no-repeat center/cover;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;
         }
@@ -48,18 +48,17 @@
         .class-img { height: 200px; background: #ddd; }
         .class-info { padding: 25px; }
 
-        /* --- 강사진 (이미지 비율 조정) --- */
+        /* --- 강사진 --- */
         .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
         .faculty-card { text-align: center; cursor: pointer; transition: transform 0.3s; }
         .faculty-card:hover { transform: translateY(-10px); }
         
-        /* 정사각형에 가깝게 프로필 사진 조정 */
         .faculty-img { width: 100%; aspect-ratio: 1 / 1.2; background: #f4f4f4; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid #eee;}
         .faculty-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: 0.3s; }
         .faculty-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
         .faculty-role { font-size: 14px; color: #007bff; font-weight: 600; }
 
-        /* --- 모달 (팝업) 스타일 수정됨 --- */
+        /* --- 모달 --- */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
         .modal-content {
             background-color: #fff; margin: 50px auto; padding: 0;
@@ -70,11 +69,9 @@
             color: #333; position: absolute; right: 20px; top: 15px; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 10;
         }
         
-        /* 모달 내부: 이미지를 통으로 보여주기 위함 */
         .modal-body-images { width: 100%; display: flex; flex-direction: column; }
         .modal-body-images img { width: 100%; height: auto; display: block; border-bottom: 1px solid #eee; }
 
-        /* 푸터 */
         .footer-map { height: 400px; background: #ddd; }
         footer { background: #111; color: white; padding: 50px 0; text-align: center; }
 
@@ -204,20 +201,20 @@
         // 강사 상세 이미지 데이터
         const teacherDetails = {
             'leedaeyoung': [
-                'images/teacher-leedaeyoung-detail1.jpg', // 상세1 (경력 텍스트 이미지)
-                'images/teacher-leedaeyoung-detail2.jpg'  // 상세2 (공연 텍스트 이미지)
+                // [확인] 여기 .jpg 인지 꼭 확인!
+                'images/teacher-leedaeyoung-detail1.jpg', 
+                'images/teacher-leedaeyoung-detail2.jpg'
             ]
         };
 
-        // 모달 열기 (이미지 로드)
+        // 모달 열기
         function showTeacherImages(teacherId) {
             const images = teacherDetails[teacherId];
             if (!images) return;
 
             const container = document.getElementById('modalImages');
-            container.innerHTML = ''; // 기존 내용 비우기
+            container.innerHTML = ''; 
 
-            // 이미지 태그 생성해서 집어넣기
             images.forEach(imgSrc => {
                 const img = document.createElement('img');
                 img.src = imgSrc;
@@ -225,7 +222,7 @@
             });
 
             document.getElementById('imageModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 스크롤 막기
+            document.body.style.overflow = 'hidden'; 
         }
 
         // 모달 닫기
