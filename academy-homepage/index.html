@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HM 보컬 아카데미</title>
+    <style>
+        /* --- 기본 설정 (Reset & Common) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; }
+        body { color: #333; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-title { font-size: 36px; font-weight: bold; text-align: center; margin-bottom: 40px; color: #111; }
+        .section-padding { padding: 80px 0; }
+
+        /* --- 헤더 (Header) --- */
+        header { height: 80px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; position: sticky; top: 0; background: white; z-index: 100; }
+        .logo { font-size: 28px; font-weight: 900; color: #333; letter-spacing: -1px; }
+        nav ul { display: flex; gap: 30px; }
+        nav a { font-weight: 600; font-size: 16px; transition: color 0.3s; }
+        nav a:hover { color: #007bff; }
+
+        /* --- 메인 배너 (Hero) --- */
+        .hero { 
+            height: 600px; 
+            background: #222; /* 이미지 없을 때 배경색 */
+            /* 배경 이미지 넣는 곳: url('이미지파일경로.jpg') 로 변경 */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1920x800?text=HM+Vocal+Academy+Main+Image') no-repeat center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;
+        }
+        .hero h1 { font-size: 54px; margin-bottom: 20px; font-weight: 700; }
+        .hero p { font-size: 20px; opacity: 0.9; }
+
+        /* --- 학원 소개 (About - ROI 스타일 2분할) --- */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-img img { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .about-text h2 { font-size: 32px; margin-bottom: 20px; }
+        .about-text p { color: #555; margin-bottom: 15px; font-size: 17px; }
+
+        /* --- 교육 과정 (Curriculum - 탭 메뉴) --- */
+        .bg-gray { background-color: #f9f9f9; }
+        .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
+        .tab-btn { padding: 12px 30px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 16px; font-weight: 600; transition: 0.3s; }
+        .tab-btn.active { background: #333; color: white; border-color: #333; }
+        
+        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .class-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .class-img { height: 200px; background: #ddd; }
+        .class-img img { width: 100%; height: 100%; object-fit: cover; }
+        .class-info { padding: 25px; }
+        .class-info h3 { font-size: 22px; margin-bottom: 10px; }
+        .class-info p { color: #666; font-size: 15px; }
+
+        /* --- 강사진 (Faculty - 그리드) --- */
+        .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .faculty-card { text-align: center; }
+        .faculty-img { width: 100%; height: 350px; background: #eee; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .faculty-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .faculty-card:hover .faculty-img img { transform: scale(1.05); }
+        .faculty-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+        .faculty-role { font-size: 14px; color: #007bff; font-weight: 600; }
+
+        /* --- 푸터 & 지도 --- */
+        .footer-map { height: 400px; background: #ddd; position: relative; }
+        footer { background: #111; color: white; padding: 50px 0; text-align: center; }
+        .footer-info p { opacity: 0.6; margin-bottom: 10px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .about-grid { grid-template-columns: 1fr; }
+            .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+            nav { display: none; } /* 모바일 메뉴 생략 (심플 버전) */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="container">
+        <div class="logo">HM VOCAL</div>
+        <nav>
+            <ul>
+                <li><a href="#about">학원소개</a></li>
+                <li><a href="#curriculum">교육과정</a></li>
+                <li><a href="#faculty">강사진</a></li>
+                <li><a href="#contact">오시는길</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>FIND YOUR VOICE<br>SHARE YOUR SONG</h1>
+        <p>HM 보컬 아카데미에서 당신의 음악적 여정을 시작하세요.</p>
+    </section>
+
+    <section id="about" class="section-padding container">
+        <div class="about-grid">
+            <div class="about-img">
+                <img src="https://via.placeholder.com/600x500?text=Academy+Interior" alt="학원 내부">
+            </div>
+            <div class="about-text">
+                <h2>음악은 마음속 감정을 표현하는<br>가장 순수한 언어입니다.</h2>
+                <p>HM 보컬 아카데미는 단순히 노래 기술만을 가르치지 않습니다.<br>본인의 소리를 찾아가고, 성장할 수 있도록 함께하는 공간입니다.</p>
+                <p>경험 많은 프로 뮤지션 강사진과 체계적인 커리큘럼을 기반으로<br>취미 과정부터 입시 대비, 전문 활동까지<br>학생 개인의 목표에 맞는 맞춤형 수업을 제공합니다.</p>
+                <br>
+                <p><strong>"진심을 담아, 음악을 향한 여정에 끝까지 함께 걷겠습니다."</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="curriculum" class="section-padding bg-gray">
+        <div class="container">
+            <div class="section-title">교육과정</div>
+            
+            <div class="tab-menu">
+                <button class="tab-btn active" onclick="openTab(event, 'basic')">보컬 입문반</button>
+                <button class="tab-btn" onclick="openTab(event, 'audition')">오디션/입시반</button>
+                <button class="tab-btn" onclick="openTab(event, 'hobby')">취미/직장인반</button>
+            </div>
+
+            <div id="basic" class="tab-content active">
+                <div class="class-card">
+                    <div class="class-img"><img src="https://via.placeholder.com/400x250?text=Vocal+Basic" alt="입문"></div>
+                    <div class="class-info">
+                        <h3>기초 발성 클래스</h3>
+                        <p>호흡과 발성의 기초를 탄탄하게 다지는 과정입니다. 자신의 목소리를 이해하고 자신감을 키워보세요.</p>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-img"><img src="https://via.placeholder.com/400x250?text=Recording" alt="녹음"></div>
+                    <div class="class-info">
+                        <h3>레코딩 기초</h3>
+                        <p>실제 녹음을 통해 내 목소리를 모니터링하고 교정하는 수업입니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="audition" class="tab-content">
+                <div class="class-card">
+                    <div class="class-img"><img src="https://via.placeholder.com/400x250?text=Audition" alt="오디션"></div>
+                    <div class="class-info">
+                        <h3>기획사 오디션 대비</h3>
+                        <p>카메라 테스트, 무대 액팅, 스타일링까지 오디션 합격을 위한 올인원 케어.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hobby" class="tab-content">
+                <div class="class-card">
+                    <div class="class-img"><img src="https://via.placeholder.com/400x250?text=Hobby" alt="취미"></div>
+                    <div class="class-info">
+                        <h3>나만의 18번 만들기</h3>
+                        <p>축가, 장기자랑 등 특별한 날을 위한 단기 완성 클래스입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faculty" class="section-padding container">
+        <div class="section-title">강사진 소개</div>
+        <div class="faculty-grid">
+            <div class="faculty-card">
+                <div class="faculty-img"><img src="https://via.placeholder.com/300x350?text=Teacher+1" alt="강사1"></div>
+                <div class="faculty-name">이성호 원장</div>
+                <div class="faculty-role">Vocal Head Coach</div>
+            </div>
+            <div class="faculty-card">
+                <div class="faculty-img"><img src="https://via.placeholder.com/300x350?text=Teacher+2" alt="강사2"></div>
+                <div class="faculty-name">김지수 강사</div>
+                <div class="faculty-role">Musical Theatre</div>
+            </div>
+            <div class="faculty-card">
+                <div class="faculty-img"><img src="https://via.placeholder.com/300x350?text=Teacher+3" alt="강사3"></div>
+                <div class="faculty-name">박세준 강사</div>
+                <div class="faculty-role">R&B / Soul</div>
+            </div>
+            <div class="faculty-card">
+                <div class="faculty-img"><img src="https://via.placeholder.com/300x350?text=Teacher+4" alt="강사4"></div>
+                <div class="faculty-name">최유리 강사</div>
+                <div class="faculty-role">Pop / Ballad</div>
+            </div>
+        </div>
+    </section>
+
+    <div id="contact" class="footer-map">
+        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#666;">
+            (여기에 네이버 지도 태그 삽입)
+        </div>
+    </div>
+    <footer>
+        <div class="container footer-info">
+            <h2>HM VOCAL ACADEMY</h2>
+            <p>서울시 00구 00로 123, 2층 | 대표전화: 02-1234-5678</p>
+            <p>&copy; 2025 HM Vocal Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 탭 기능 스크립트
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "grid";
+            setTimeout(() => { document.getElementById(tabName).classList.add("active"); }, 10);
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>
