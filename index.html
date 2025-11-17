@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HM 보컬 아카데미</title>
     <style>
-        /* --- 기본 설정 (Reset & Common) --- */
+        /* --- 기본 설정 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; }
         body { color: #333; line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
@@ -14,109 +14,77 @@
         .section-title { font-size: 36px; font-weight: bold; text-align: center; margin-bottom: 40px; color: #111; }
         .section-padding { padding: 80px 0; }
 
-        /* --- 헤더 (Header) --- */
+        /* --- 헤더 --- */
         header { height: 80px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; position: sticky; top: 0; background: white; z-index: 100; }
         .logo { font-size: 28px; font-weight: 900; color: #333; letter-spacing: -1px; }
         nav ul { display: flex; gap: 30px; }
         nav a { font-weight: 600; font-size: 16px; transition: color 0.3s; }
         nav a:hover { color: #007bff; }
 
-        /* --- 메인 배너 (Hero) --- */
+        /* --- 메인 배너 (aca_main 적용) --- */
         .hero { 
             height: 600px; 
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/main-banner.jpg') no-repeat center/cover; /* 실제 이미지 경로 */
+            /* 배경 이미지 경로 수정됨 */
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/main-banner.jpg') no-repeat center/cover;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;
         }
-        .hero h1 { font-size: 54px; margin-bottom: 20px; font-weight: 700; }
-        .hero p { font-size: 20px; opacity: 0.9; }
+        .hero h1 { font-size: 54px; margin-bottom: 20px; font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 20px; opacity: 0.9; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
 
-        /* --- 학원 소개 (About - ROI 스타일 2분할) --- */
+        /* --- 학원 소개 --- */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .about-img img { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .about-img { width: 100%; height: 400px; background: #eee; border-radius: 12px; display:flex; align-items:center; justify-content:center; color:#888;} 
         .about-text h2 { font-size: 32px; margin-bottom: 20px; }
         .about-text p { color: #555; margin-bottom: 15px; font-size: 17px; }
 
-        /* --- 교육 과정 (Curriculum - 탭 메뉴) --- */
+        /* --- 교육 과정 --- */
         .bg-gray { background-color: #f9f9f9; }
         .tab-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
         .tab-btn { padding: 12px 30px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 16px; font-weight: 600; transition: 0.3s; }
         .tab-btn.active { background: #333; color: white; border-color: #333; }
-        
         .tab-content { display: none; animation: fadeIn 0.5s; }
         .tab-content.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        
         .class-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .class-img { height: 200px; background: #ddd; }
-        .class-img img { width: 100%; height: 100%; object-fit: cover; }
         .class-info { padding: 25px; }
-        .class-info h3 { font-size: 22px; margin-bottom: 10px; }
-        .class-info p { color: #666; font-size: 15px; }
 
-        /* --- 강사진 (Faculty - 그리드) --- */
+        /* --- 강사진 (이미지 비율 조정) --- */
         .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
-        .faculty-card { text-align: center; cursor: pointer; } /* cursor: pointer 추가 */
-        .faculty-img { width: 100%; height: 350px; background: #eee; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
-        .faculty-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .faculty-card:hover .faculty-img img { transform: scale(1.05); }
+        .faculty-card { text-align: center; cursor: pointer; transition: transform 0.3s; }
+        .faculty-card:hover { transform: translateY(-10px); }
+        
+        /* 정사각형에 가깝게 프로필 사진 조정 */
+        .faculty-img { width: 100%; aspect-ratio: 1 / 1.2; background: #f4f4f4; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid #eee;}
+        .faculty-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: 0.3s; }
         .faculty-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
         .faculty-role { font-size: 14px; color: #007bff; font-weight: 600; }
 
-        /* --- 푸터 & 지도 --- */
-        .footer-map { height: 400px; background: #ddd; position: relative; }
-        footer { background: #111; color: white; padding: 50px 0; text-align: center; }
-        .footer-info p { opacity: 0.6; margin-bottom: 10px; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- 모달 (팝업) 스타일 --- */
-        .modal { display: none; /* 기본적으로 숨김 */
-            position: fixed; z-index: 1000; left: 0; top: 0;
-            width: 100%; height: 100%; overflow: auto;
-            background-color: rgba(0,0,0,0.7); /* 반투명 검은색 배경 */
-            justify-content: center; align-items: center;
-        }
+        /* --- 모달 (팝업) 스타일 수정됨 --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
         .modal-content {
-            background-color: #fefefe; margin: auto; padding: 40px;
-            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            width: 80%; max-width: 1000px; position: relative;
-            animation: slideIn 0.3s forwards;
-            max-height: 90vh; overflow-y: auto; /* 내용 길어지면 스크롤 */
+            background-color: #fff; margin: 50px auto; padding: 0;
+            border-radius: 15px; width: 90%; max-width: 800px; position: relative;
+            animation: slideIn 0.3s forwards; overflow: hidden;
         }
         .close-button {
-            color: #aaa; float: right; font-size: 40px; font-weight: bold;
-            position: absolute; right: 20px; top: 10px; cursor: pointer;
+            color: #333; position: absolute; right: 20px; top: 15px; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 10;
         }
-        .close-button:hover,
-        .close-button:focus { color: #000; text-decoration: none; cursor: pointer; }
         
-        .modal-body { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; margin-top: 20px;}
-        .modal-teacher-intro { text-align: center; }
-        .modal-teacher-intro img { width: 100%; max-width: 250px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .modal-teacher-intro h3 { font-size: 28px; margin-bottom: 10px; }
-        .modal-teacher-intro p { font-size: 18px; color: #007bff; font-weight: 600; margin-bottom: 20px; }
-        
-        .modal-teacher-keywords { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-        .modal-teacher-keywords span { background-color: #e9e9e9; padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: 500; }
+        /* 모달 내부: 이미지를 통으로 보여주기 위함 */
+        .modal-body-images { width: 100%; display: flex; flex-direction: column; }
+        .modal-body-images img { width: 100%; height: auto; display: block; border-bottom: 1px solid #eee; }
 
-        .modal-profile-details h2 { font-size: 32px; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .modal-profile-details .profile-section { margin-bottom: 25px; }
-        .modal-profile-details .profile-section h3 { font-size: 22px; margin-bottom: 10px; color: #333; }
-        .modal-profile-details .profile-section ul { list-style-type: disc; margin-left: 20px; font-size: 16px; color: #555; }
-        .modal-profile-details .profile-section ul li { margin-bottom: 5px; }
-        
+        /* 푸터 */
+        .footer-map { height: 400px; background: #ddd; }
+        footer { background: #111; color: white; padding: 50px 0; text-align: center; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 모바일 반응형 */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 32px; }
             .about-grid { grid-template-columns: 1fr; }
             .faculty-grid { grid-template-columns: repeat(2, 1fr); }
-            nav { display: none; } /* 모바일 메뉴 생략 (심플 버전) */
-            .modal-content { width: 95%; padding: 20px; }
-            .modal-body { grid-template-columns: 1fr; }
-            .modal-teacher-intro img { max-width: 150px; }
-            .modal-profile-details h2 { font-size: 24px; }
-            .modal-profile-details .profile-section h3 { font-size: 18px; }
+            nav { display: none; }
         }
     </style>
 </head>
@@ -142,13 +110,11 @@
     <section id="about" class="section-padding container">
         <div class="about-grid">
             <div class="about-img">
-                <img src="images/academy-interior.jpg" alt="학원 내부">
+                <span>학원 내부 사진 위치</span>
             </div>
             <div class="about-text">
                 <h2>음악은 마음속 감정을 표현하는<br>가장 순수한 언어입니다.</h2>
-                <p>HM 보컬 아카데미는 단순히 노래 기술만을 가르치지 않습니다.<br>본인의 소리를 찾아가고, 성장할 수 있도록 함께하는 공간입니다.</p>
-                <p>경험 많은 프로 뮤지션 강사진과 체계적인 커리큘럼을 기반으로<br>취미 과정부터 입시 대비, 전문 활동까지<br>학생 개인의 목표에 맞는 맞춤형 수업을 제공합니다.</p>
-                <br>
+                <p>HM 보컬 아카데미는 체계적인 커리큘럼을 기반으로 학생 개인의 목표에 맞는 맞춤형 수업을 제공합니다.</p>
                 <p><strong>"진심을 담아, 음악을 향한 여정에 끝까지 함께 걷겠습니다."</strong></p>
             </div>
         </div>
@@ -157,72 +123,41 @@
     <section id="curriculum" class="section-padding bg-gray">
         <div class="container">
             <div class="section-title">교육과정</div>
-            
             <div class="tab-menu">
                 <button class="tab-btn active" onclick="openTab(event, 'basic')">보컬 입문반</button>
                 <button class="tab-btn" onclick="openTab(event, 'audition')">오디션/입시반</button>
                 <button class="tab-btn" onclick="openTab(event, 'hobby')">취미/직장인반</button>
             </div>
-
-            <div id="basic" class="tab-content active">
-                <div class="class-card">
-                    <div class="class-img"><img src="images/class-basic.jpg" alt="입문"></div>
-                    <div class="class-info">
-                        <h3>기초 발성 클래스</h3>
-                        <p>호흡과 발성의 기초를 탄탄하게 다지는 과정입니다. 자신의 목소리를 이해하고 자신감을 키워보세요.</p>
-                    </div>
-                </div>
-                <div class="class-card">
-                    <div class="class-img"><img src="images/class-recording.jpg" alt="녹음"></div>
-                    <div class="class-info">
-                        <h3>레코딩 기초</h3>
-                        <p>실제 녹음을 통해 내 목소리를 모니터링하고 교정하는 수업입니다.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="audition" class="tab-content">
-                <div class="class-card">
-                    <div class="class-img"><img src="images/class-audition.jpg" alt="오디션"></div>
-                    <div class="class-info">
-                        <h3>기획사 오디션 대비</h3>
-                        <p>카메라 테스트, 무대 액팅, 스타일링까지 오디션 합격을 위한 올인원 케어.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="hobby" class="tab-content">
-                <div class="class-card">
-                    <div class="class-img"><img src="images/class-hobby.jpg" alt="취미"></div>
-                    <div class="class-info">
-                        <h3>나만의 18번 만들기</h3>
-                        <p>축가, 장기자랑 등 특별한 날을 위한 단기 완성 클래스입니다.</p>
-                    </div>
-                </div>
-            </div>
+            <div id="basic" class="tab-content active"><div class="class-card"><div class="class-info"><h3>기초 발성 클래스</h3><p>호흡과 발성의 기초 완성</p></div></div></div>
+            <div id="audition" class="tab-content"><div class="class-card"><div class="class-info"><h3>오디션 심화</h3><p>실전 무대 퍼포먼스</p></div></div></div>
+            <div id="hobby" class="tab-content"><div class="class-card"><div class="class-info"><h3>취미 완성</h3><p>나만의 노래 만들기</p></div></div></div>
         </div>
     </section>
 
     <section id="faculty" class="section-padding container">
         <div class="section-title">강사진 소개</div>
         <div class="faculty-grid">
-            <div class="faculty-card" onclick="showTeacherProfile('leedaejong')">
-                <div class="faculty-img"><img src="images/teacher-leedaejong.jpg" alt="이대종 강사"></div>
-                <div class="faculty-name">이대종 강사</div>
+            
+            <div class="faculty-card" onclick="showTeacherImages('leedaeyoung')">
+                <div class="faculty-img">
+                    <img src="images/teacher-leedaeyoung.jpg" alt="이대영 강사">
+                </div>
+                <div class="faculty-name">이대영 강사</div>
                 <div class="faculty-role">Vocal Head Coach</div>
             </div>
-            <div class="faculty-card" onclick="showTeacherProfile('kimjisu')">
-                <div class="faculty-img"><img src="images/teacher-kimjisu.jpg" alt="김지수 강사"></div>
+
+            <div class="faculty-card">
+                <div class="faculty-img"><img src="" alt="사진 준비중"></div>
                 <div class="faculty-name">김지수 강사</div>
                 <div class="faculty-role">Musical Theatre</div>
             </div>
-            <div class="faculty-card" onclick="showTeacherProfile('parksejun')">
-                <div class="faculty-img"><img src="images/teacher-parksejun.jpg" alt="박세준 강사"></div>
+            <div class="faculty-card">
+                <div class="faculty-img"><img src="" alt="사진 준비중"></div>
                 <div class="faculty-name">박세준 강사</div>
                 <div class="faculty-role">R&B / Soul</div>
             </div>
-            <div class="faculty-card" onclick="showTeacherProfile('choiyuri')">
-                <div class="faculty-img"><img src="images/teacher-choiyuri.jpg" alt="최유리 강사"></div>
+            <div class="faculty-card">
+                <div class="faculty-img"><img src="" alt="사진 준비중"></div>
                 <div class="faculty-name">최유리 강사</div>
                 <div class="faculty-role">Pop / Ballad</div>
             </div>
@@ -230,62 +165,26 @@
     </section>
 
     <div id="contact" class="footer-map">
-        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#666; font-size:24px;">
-            (여기에 네이버/카카오 지도 태그 삽입 예정)
-        </div>
+        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#666;">지도 들어갈 자리</div>
     </div>
     <footer>
         <div class="container footer-info">
             <h2>HM VOCAL ACADEMY</h2>
             <p>서울시 00구 00로 123, 2층 | 대표전화: 02-1234-5678</p>
-            <p>&copy; 2025 HM Vocal Academy. All Rights Reserved.</p>
+            <p>&copy; 2025 HM Vocal Academy.</p>
         </div>
     </footer>
 
-    <div id="teacherModal" class="modal">
+    <div id="imageModal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="closeModal()">&times;</span>
-            <div class="modal-body">
-                <div class="modal-teacher-intro">
-                    <img id="modalTeacherImage" src="" alt="강사 프로필">
-                    <h3 id="modalTeacherName"></h3>
-                    <p id="modalTeacherRole"></p>
-                    <div class="modal-teacher-keywords" id="modalTeacherKeywords">
-                        </div>
+            <div class="modal-body-images" id="modalImages">
                 </div>
-                <div class="modal-profile-details">
-                    <h2 id="modalProfileTitle">강사님 프로필</h2>
-                    <div class="profile-section">
-                        <h3>밴드 경력</h3>
-                        <ul id="modalBandCareer"></ul>
-                    </div>
-                    <div class="profile-section">
-                        <h3>앨범 경력</h3>
-                        <ul id="modalAlbumCareer"></ul>
-                    </div>
-                    <div class="profile-section">
-                        <h3>방송 경력</h3>
-                        <ul id="modalBroadcastCareer"></ul>
-                    </div>
-                    <div class="profile-section">
-                        <h3>공연 경력</h3>
-                        <ul id="modalPerformanceCareer"></ul>
-                    </div>
-                    <div class="profile-section">
-                        <h3>가이드 경력</h3>
-                        <ul id="modalGuideCareer"></ul>
-                    </div>
-                    <div class="profile-section">
-                        <h3>레슨 및 심사 경력</h3>
-                        <ul id="modalLessonCareer"></ul>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
-        // 탭 기능 스크립트
+        // 탭 기능
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -302,186 +201,46 @@
             evt.currentTarget.className += " active";
         }
 
-        // 강사 데이터 (실제 이대영 강사님 정보는 여기에 입력)
-        const teachers = {
-            'leedaejong': {
-                name: '이대종 강사',
-                role: 'Vocal Head Coach',
-                image: 'images/teacher-leedaejong.jpg', // 실제 이미지 경로로 변경
-                keywords: ['쾌활한', '에너지', '열정', '소통', '즐거운'],
-                bandCareer: [
-                    '2009년 밴드 "Brown City" 활동',
-                    '2011년 이선정 밴드 코러스 활동',
-                    '2011-2014년 인선브라더 메인보컬 활동',
-                    '2018년 빅밴드 라온 보컬',
-                    '2021년 메이커스 보컬',
-                ],
-                albumCareer: [
-                    '2013년 1월 18일 Universal Music',
-                    '첫 번째 싱글 앨범 "Groove" "Trick" 발매',
-                    '2013년 7월 11일',
-                    '두 번째 싱글 앨범 "단발머리" 발매',
-                    '2014년 Daum 웹툰 "동네식객들" OST',
-                    '2016년 Min G 싱글 "두번다시 보지말자" 피쳐링',
-                    '2020년 12월 도시재생사업단 반부패송 작사 작곡',
-                    '"만북마을"',
-                    '2021년 2월 서해도 도 홍보송 작곡 작사 편곡',
-                    '"대청도", "소이작도"',
-                    '2025년 "저 끝을보며" 연말 발매예정',
-                ],
-                broadcastCareer: [
-                    '2011 Y-star 세계인이대회 축하공연',
-                    '2011 Kbs 사랑의 리퀘스트',
-                    '2013 M.net 보이스코리아 시즌1',
-                    '2013 KBS TOP BAND 시즌1 언컷브라더스 밴드 전체 2위로 본선에 진출',
-                    '본선과 패자부활전 등 4회 방송 출연',
-                ],
-                performanceCareer: [
-                    '2010년 홍대 상상마당 단독콘서트 "Brown City"',
-                    '2013년 K-루키즈 결선진출',
-                    '2013년 서울 FRINGE 공연',
-                    '2013년 의정부 WORLD MUSIC FESTIVAL 공연',
-                    '2013년 UpThatBrown 1st Concert',
-                    '2013년 송도 웰컴 "지음"',
-                    '월수금 메인스테이지 장기 공연',
-                    '2013년 VIVID FESTIVAL 공연',
-                    '2013년 양림 ROCK FESTIVAL 공연',
-                    '2013년 THE REAL PROJECT "FUNK UNION" 정기공연',
-                    '2013년 상명대학교 축제 초청공연',
-                    '2013년 자라섬 재즈 페스티벌 공연',
-                    '2014년 CJ E&M M-PUB 공연',
-                    '2014년 인천원 "불꽃재즈" 특별공연',
-                    '2019년 제7회 소래포구축제 book소리 축제',
-                    '2020년 남동구 행복나눔 김장한마당 축하공연',
-                    '2022년 제32회 남동구민의날 기념식',
-                    '2022년 대한미용사회 인천지부 취임식',
-                    '2022년 구월 아시아드 밤마켓',
-                    '2022년 남동구 청년의 날 기념축제',
-                    '2022년 제3회 남동 논두렁 페스티벌',
-                    '2022년 제22회 소래포구 축제',
-                    '2022년 남동복지마당',
-                    '2023년 남동구 노인복지관 어버이날 행사',
-                    '2023년 남동구 평생교육관 개강식',
-                    '2023년 남동구 노인복지관 개관식',
-                    '2023년 제4회 남동 논두렁 페스티벌',
-                    '2023년 제23회 소래포구 축제',
-                    '2023년 남동문화의 밤',
-                    '2023년 구월아시아드 밤마켓',
-                    '2023년 인천남동지역자활센터 연말사업보고회',
-                    '2024년 인천소월 뮤직페스티벌',
-                    '2024년 남동구민을 위한 연주회',
-                    '2024년 제24회 소래포구 축제',
-                    '2025년 제25회 소래포구 축제'
-                ],
-                guideCareer: [
-                    '파이브돌즈 데뷔앨범 3곡',
-                    'SM 사이퍼니 2집 "Life"',
-                    '비 4집 "이혜민"',
-                    '8eight(에이트) 콘서트 리앵콜',
-                    '"Oh happy day" 부분작업',
-                    '음반 가이드 보컬 외 다수의 가이드 보컬 작업',
-                ],
-                lessonCareer: [
-                    '2012년 Rain 실용 아카데미 1년 재직',
-                    '2013년 JMJ 실용 아카데미 3년 재직',
-                    '2015년 HM VOCAL 실용음악학원 재직중',
-                    '2016년 인천대학교 가요제 심사위원',
-                    '2018년 인천대학교 가요제 본선 심사위원',
-                    '2021년 전북의 문화 오아시스 남동구 보컬 멘토',
-                    '2023년 전북의 문화 오아시스 남동구 보컬 멘토',
-                ]
-            },
-            'kimjisu': {
-                name: '김지수 강사',
-                role: 'Musical Theatre',
-                image: 'images/teacher-kimjisu.jpg',
-                keywords: ['섬세한', '감성', '표현력'],
-                bandCareer: ['뮤지컬 팀 "하모니" 보컬'],
-                albumCareer: ['개인 앨범 "별의 노래" 발매'],
-                broadcastCareer: ['MBC "복면가왕" 출연'],
-                performanceCareer: ['다수 뮤지컬 공연 참여', '정기 콘서트 개최'],
-                guideCareer: [],
-                lessonCareer: ['HM VOCAL 아카데미 뮤지컬 보컬 담당']
-            },
-            'parksejun': {
-                name: '박세준 강사',
-                role: 'R&B / Soul',
-                image: 'images/teacher-parksejun.jpg',
-                keywords: ['리듬감', '그루브', '소울풀'],
-                bandCareer: ['R&B 밴드 "Urban Groove" 활동'],
-                albumCareer: ['싱글 앨범 "City Lights" 발매'],
-                broadcastCareer: ['KBS "불후의 명곡" 편곡 참여'],
-                performanceCareer: ['다수 클럽 공연 및 페스티벌 참여'],
-                guideCareer: [],
-                lessonCareer: ['HM VOCAL 아카데미 R&B/Soul 보컬 담당']
-            },
-            'choiyuri': {
-                name: '최유리 강사',
-                role: 'Pop / Ballad',
-                image: 'images/teacher-choiyuri.jpg',
-                keywords: ['청아한', '감동', '편안함'],
-                bandCareer: [],
-                albumCareer: ['OST 참여 및 다수 피쳐링'],
-                broadcastCareer: ['JTBC "히든싱어" 출연'],
-                performanceCareer: ['소극장 콘서트 다수 진행'],
-                guideCareer: ['아이돌 보컬 가이드 작업'],
-                lessonCareer: ['HM VOCAL 아카데미 팝/발라드 보컬 담당']
-            }
+        // 강사 상세 이미지 데이터
+        const teacherDetails = {
+            'leedaeyoung': [
+                'images/teacher-leedaeyoung-detail1.jpg', // 상세1 (경력 텍스트 이미지)
+                'images/teacher-leedaeyoung-detail2.jpg'  // 상세2 (공연 텍스트 이미지)
+            ]
         };
 
-        // 모달 열기 함수
-        function showTeacherProfile(teacherId) {
-            const teacher = teachers[teacherId];
-            if (!teacher) return;
+        // 모달 열기 (이미지 로드)
+        function showTeacherImages(teacherId) {
+            const images = teacherDetails[teacherId];
+            if (!images) return;
 
-            document.getElementById('modalTeacherImage').src = teacher.image;
-            document.getElementById('modalTeacherName').textContent = teacher.name;
-            document.getElementById('modalTeacherRole').textContent = teacher.role;
-            
-            // 키워드 동적 생성
-            const keywordsContainer = document.getElementById('modalTeacherKeywords');
-            keywordsContainer.innerHTML = ''; // 기존 키워드 초기화
-            teacher.keywords.forEach(keyword => {
-                const span = document.createElement('span');
-                span.textContent = '#' + keyword;
-                keywordsContainer.appendChild(span);
+            const container = document.getElementById('modalImages');
+            container.innerHTML = ''; // 기존 내용 비우기
+
+            // 이미지 태그 생성해서 집어넣기
+            images.forEach(imgSrc => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                container.appendChild(img);
             });
 
-            // 각 경력 섹션 업데이트
-            updateCareerList('modalBandCareer', teacher.bandCareer);
-            updateCareerList('modalAlbumCareer', teacher.albumCareer);
-            updateCareerList('modalBroadcastCareer', teacher.broadcastCareer);
-            updateCareerList('modalPerformanceCareer', teacher.performanceCareer);
-            updateCareerList('modalGuideCareer', teacher.guideCareer);
-            updateCareerList('modalLessonCareer', teacher.lessonCareer);
-
-            document.getElementById('teacherModal').style.display = 'flex'; // 모달 보이기
-            document.body.style.overflow = 'hidden'; // 스크롤 방지
+            document.getElementById('imageModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // 스크롤 막기
         }
 
-        // 경력 리스트 업데이트 함수
-        function updateCareerList(ulId, careerArray) {
-            const ul = document.getElementById(ulId);
-            ul.innerHTML = ''; // 기존 리스트 초기화
-            if (careerArray && careerArray.length > 0) {
-                careerArray.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item;
-                    ul.appendChild(li);
-                });
-                ul.closest('.profile-section').style.display = 'block'; // 섹션 보이기
-            } else {
-                ul.closest('.profile-section').style.display = 'none'; // 내용 없으면 섹션 숨기기
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 배경 클릭시 닫기
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeModal();
             }
         }
-
-        // 모달 닫기 함수
-        function closeModal() {
-            document.getElementById('teacherModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // 스크롤 허용
-        }
-
-        // 모달 외부 클릭 시 닫기
-        window.onclick = function(event) {
-            const modal = document.getElementById('teacherModal');
-            if (event.target == modal) {
+    </script>
+</body>
+</html>
